@@ -1,17 +1,24 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Tab 2
+      Weather
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Tab 2</ion-title>
-    </ion-toolbar>
-  </ion-header>
 
-  <app-explore-container name="Tab 2 page"></app-explore-container>
+  @for (place of places; track $index) {
+    <ion-card>
+      <ion-card-content class="ion-display-flex ion-justify-content-between">
+        <div>
+          <ion-card-title>{{ place.title }}</ion-card-title>
+          <ion-card-subtitle>{{ place.temperature }} C</ion-card-subtitle>
+          <p>{{ place.description }}</p>
+        </div>
+        <div>text B</div>
+      </ion-card-content>
+    </ion-card>
+  }
+
 </ion-content>

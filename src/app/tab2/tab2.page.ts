@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, inject} from '@angular/core';
 import {
   IonHeader,
   IonToolbar,
@@ -9,26 +9,23 @@ import {
   IonCardTitle,
   IonCardSubtitle
 } from '@ionic/angular';
-import { ExploreContainerComponent } from '../explore-container/explore-container.component';
+import {ExploreContainerComponent} from '../explore-container/explore-container.component';
 import {Place} from "../models/place.model";
+import {Weather} from "../utils/services/weather/weather";
+import {AsyncPipe} from "@angular/common";
 
 @Component({
   selector: 'app-tab2',
   templateUrl: 'tab2.page.html',
   styleUrls: ['tab2.page.scss'],
-  imports: [IonHeader, IonToolbar, IonTitle, IonContent, ExploreContainerComponent, IonCard, IonCardContent, IonCardTitle, IonCardSubtitle]
+  imports: [IonHeader, IonToolbar, IonTitle, IonContent, ExploreContainerComponent, IonCard, IonCardContent, IonCardTitle, IonCardSubtitle, AsyncPipe]
 })
 export class Tab2Page {
 
-  places: Place[] = [
-    {
-      id: "abc",
-      title: "Praha",
-      temperature: 0,
-      description: "Mostly cloudy"
-    }
-  ];
+  private weatherService = inject(Weather)
 
-  constructor() {}
+  protected place$ = this.weatherService.getWeather$(50.087999, 14.420999)
 
+  constructor() {
+  }
 }

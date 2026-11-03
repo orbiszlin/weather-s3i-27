@@ -8,17 +8,20 @@
 
 <ion-content [fullscreen]="true">
 
-  @for (place of places; track $index) {
+  @let place = place$ | async;
+
+  @if (place) {
     <ion-card>
       <ion-card-content class="ion-display-flex ion-justify-content-between">
         <div>
-          <ion-card-title>{{ place.title }}</ion-card-title>
-          <ion-card-subtitle>{{ place.temperature }} C</ion-card-subtitle>
-          <p>{{ place.description }}</p>
+          <ion-card-title>{{ place.name }}</ion-card-title>
+          <ion-card-subtitle>{{ place.main.temp }}</ion-card-subtitle>
+          <p>{{ place.base }}</p>
         </div>
         <div>text B</div>
       </ion-card-content>
     </ion-card>
   }
+
 
 </ion-content>

@@ -1,4 +1,4 @@
-import {Component, inject} from '@angular/core';
+import {Component, inject, OnInit} from '@angular/core';
 import {
   IonHeader,
   IonToolbar,
@@ -13,6 +13,7 @@ import {ExploreContainerComponent} from '../explore-container/explore-container.
 import {Place} from "../models/place.model";
 import {Weather} from "../utils/services/weather/weather";
 import {AsyncPipe} from "@angular/common";
+import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-tab2',
@@ -20,12 +21,30 @@ import {AsyncPipe} from "@angular/common";
   styleUrls: ['tab2.page.scss'],
   imports: [IonHeader, IonToolbar, IonTitle, IonContent, ExploreContainerComponent, IonCard, IonCardContent, IonCardTitle, IonCardSubtitle, AsyncPipe]
 })
-export class Tab2Page {
+export class Tab2Page implements OnInit {
 
   private weatherService = inject(Weather)
 
+  /**
+   * @deprecated
+   * @protected
+   */
   protected place$ = this.weatherService.getWeather$(50.087999, 14.420999)
 
+  protected places$: Observable<Place>[] = [];
+
   constructor() {
+  }
+
+  ngOnInit(): void {
+    const geoPoints = [
+      {lat: 50.08, lon: 14.42},
+      {lat: 12.08, lon: 30.42},
+      {lat: 20.08, lon: -30.42},
+    ]
+
+    geoPoints.forEach(point => {
+      this.places$.push(this.weatherService.getWeather$(point.lat, point.lon))
+    })
   }
 }

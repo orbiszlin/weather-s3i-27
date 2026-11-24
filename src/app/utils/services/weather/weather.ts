@@ -8,7 +8,7 @@ export class Weather {
   private http = inject(HttpClient);
 
   public getWeather$(lat: number, lon: number) {
-    const url = `${environment.baseUrl}/weather?lat=${lat}&lon=${lon}&appid=${environment.apiKey}`;
+    const url = `${environment.baseUrl}/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${environment.apiKey}`;
 
     return this.http.get<Place>(url);
   }

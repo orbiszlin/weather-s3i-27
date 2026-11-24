@@ -7,23 +7,25 @@ import {
   IonCard,
   IonCardContent,
   IonCardTitle,
-  IonCardSubtitle
+  IonCardSubtitle, IonSearchbar
 } from '@ionic/angular';
 import {ExploreContainerComponent} from '../explore-container/explore-container.component';
 import {Place} from "../models/place.model";
 import {Weather} from "../utils/services/weather/weather";
 import {AsyncPipe} from "@angular/common";
 import {Observable} from "rxjs";
+import {Geocoding} from "../utils/services/geocoding/geocoding";
 
 @Component({
   selector: 'app-tab2',
   templateUrl: 'tab2.page.html',
   styleUrls: ['tab2.page.scss'],
-  imports: [IonHeader, IonToolbar, IonTitle, IonContent, ExploreContainerComponent, IonCard, IonCardContent, IonCardTitle, IonCardSubtitle, AsyncPipe]
+  imports: [IonHeader, IonToolbar, IonTitle, IonContent, ExploreContainerComponent, IonCard, IonCardContent, IonCardTitle, IonCardSubtitle, AsyncPipe, IonSearchbar]
 })
 export class Tab2Page implements OnInit {
 
   private weatherService = inject(Weather)
+  private geocodingService = inject(Geocoding)
 
   /**
    * @deprecated
@@ -45,6 +47,14 @@ export class Tab2Page implements OnInit {
 
     geoPoints.forEach(point => {
       this.places$.push(this.weatherService.getWeather$(point.lat, point.lon))
+    })
+  }
+
+  protected searchGeo(event: any) {
+    const query = event.target.value;
+
+    this.geocodingService.geocode(query).subscribe(data => {
+      console.log(data)
     })
   }
 }

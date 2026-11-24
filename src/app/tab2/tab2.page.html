@@ -8,6 +8,9 @@
 
 <ion-content [fullscreen]="true">
 
+  <ion-searchbar [debounce]="400" (ionInput)="searchGeo($event)"></ion-searchbar>
+
+
   @for (place$ of places$; track $index) {
     @let place = place$ | async;
 
